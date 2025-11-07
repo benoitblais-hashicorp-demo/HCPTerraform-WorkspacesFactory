@@ -1,6 +1,6 @@
 # HCP Terraform Workspaces Factory
 
-Code which manages configuration and life-cycle of all the HCP Terraform
+Code which manages configuration and life-cycle of the HCP Terraform
 workspaces factory. It is designed to be used from a dedicated
 API-Driven HCP Terraform workspace that would provision and manage the
 configuration using Terraform code (IaC).
