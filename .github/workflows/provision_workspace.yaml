@@ -125,8 +125,7 @@ jobs:
           else
             repository_name=${REPOSITORY_NAME}
           fi
-          identifier="'{identifier=\"${GITHUB_OWNER}/${repository_name}\"}'"
-          vcs_repo=',{"type":"vars","attributes":{"key":"vcs_repo","value":"'"$identifier}"'","category":"terraform","hcl":"true"}}'
+          vcs_repo=',{"type":"vars","attributes":{"key":"vcs_repo","value":"'"{identifier=\"${GITHUB_OWNER}/${repository_name}\"}"'","category":"terraform","hcl":"true"}}'
           if [ -z "${VARIABLES}" ]; then
             variables=""
           else
