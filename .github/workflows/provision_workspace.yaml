@@ -109,6 +109,7 @@ jobs:
           NAME: ${{ github.event.inputs.name }}
           NO_CODE_ID: ${{ steps.get_no_code_Project_id.outputs.NO_CODE_ID }}
           PROJECT_ID: ${{ steps.project.outputs.id }}
+          PROJECT: ${{ github.event.inputs.project }}
           GITHUB_OWNER: ${{ github.event.inputs.github_owner }}
           REPOSITORY_NAME: ${{ github.event.inputs.repository_name }}
           VARIABLES: ${{ github.event.inputs.variables }}
@@ -131,7 +132,7 @@ jobs:
           else
             variables=',{"type":"vars","attributes":{"key":"variables","value":"'"${VARIABLES}"'","category":"terraform","hcl":"true"}}'
           fi
-          json_string='{"data": {"type": "workspaces","attributes": {"name": "'"${workspace_name}"'","auto_apply": true},"relationships": {"project": {"data": {"id": "'"${PROJECT_ID}"'","type": "project"}},"vars": {"data": [{"type": "vars","attributes": {"key": "name","value": "'"${NAME}"'","category": "terraform"}}'"${vcs_repo}""${variables}"']}}}}'
+          json_string='{"data": {"type": "workspaces","attributes": {"name": "'"${workspace_name}"'","auto_apply": true},"relationships": {"project": {"data": {"id": "'"${PROJECT_ID}"'","type": "project"}},"vars": {"data": [{"type": "vars","attributes": {"key": "name","value": "'"${NAME}"'","category": "terraform"}},{"type": "vars","attributes": {"key": "project_name","value": "'"${PROJECT}"'","category": "terraform"}}'"${vcs_repo}""${variables}"']}}}}'
           json_payload=$(echo "${json_string}" | jq)
           run=$(curl -sS --request POST --url "${tfc_api_url}/no-code-modules/${NO_CODE_ID}/workspaces" \
           --header "${auth_header}" --header "${content_header}" --data "${json_payload}")
