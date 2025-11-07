@@ -15,7 +15,7 @@ on:  # yamllint disable-line rule:truthy
         description: 'GitHub organization or user owning the repository.'
         required: false
         type: string
-        default: 'benoitblais-hashicorp'
+        default: 'benoitblais-hashicorp-demo'
       repository_name:
         description: 'Name of the GitHub repository. If not provided, the value from name will be used.'
         required: false
@@ -125,7 +125,7 @@ jobs:
           else
             repository_name=${REPOSITORY_NAME}
           fi
-          vcs_repo=',{"type":"vars","attributes":{"key":"vcs_repo","value":"'"{identifier=\\"${GITHUB_OWNER}/${repository_name}\\"}"'","category":"terraform","hcl":"true"}}'
+          vcs_repo=',{"type":"vars","attributes":{"key":"vcs_repo","value":"'"{identifier=\\\"${GITHUB_OWNER}/${repository_name}\\\"}"'","category":"terraform","hcl":"true"}}'
           if [ -z "${VARIABLES}" ]; then
             variables=""
           else
