@@ -26,7 +26,7 @@ resource "tfe_variable_set" "this" {
 
 module "workspaces_factory_team_hcp" {
   source       = "app.terraform.io/benoitblais-hashicorp/team/tfe"
-  version      = "1.0.0"
+  version      = "1.0.1"
   count        = length(tfe_project.this) > 0 ? 1 : 0
   name         = lower(replace("${tfe_project.this[0].name}-hcp", "/\\W|_|\\s/", "-"))
   organization = var.organization_name
