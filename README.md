@@ -60,7 +60,7 @@ The following Modules are called:
 
 Source: app.terraform.io/benoitblais-hashicorp/team/tfe
 
-Version: 1.0.0
+Version: 1.0.1
 
 ## Required Inputs
 
