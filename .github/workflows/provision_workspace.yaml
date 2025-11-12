@@ -122,17 +122,17 @@ jobs:
           workspace_name=$(echo "${NAME}-workspace" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
           echo "INFO     | Create workspace ${workspace_name} in project ${TFC_PROJECT}."
           if [ -z "${REPOSITORY_NAME}" ]; then
-            repository_name=${NAME}
+            vcs_repo_fullname="${GITHUB_OWNER}/${NAME}"
           else
-            repository_name=${REPOSITORY_NAME}
+            vcs_repo_fullname="${GITHUB_OWNER}/${REPOSITORY_NAME}"
           fi
-          vcs_repo=',{"type":"vars","attributes":{"key":"vcs_repo","value":"'"{identifier=\\\"${GITHUB_OWNER}/${repository_name}\\\"}"'","category":"terraform","hcl":"true"}}'
+          vcs_repo_identifier=',{"type":"vars","attributes":{"key":"vcs_repo_identifier","value":"'"${vcs_repo_fullname}"'","category":"terraform"}}'
           if [ -z "${VARIABLES}" ]; then
             variables=""
           else
             variables=',{"type":"vars","attributes":{"key":"variables","value":"'"${VARIABLES}"'","category":"terraform","hcl":"true"}}'
           fi
-          json_string='{"data": {"type": "workspaces","attributes": {"name": "'"${workspace_name}"'","auto_apply": true},"relationships": {"project": {"data": {"id": "'"${PROJECT_ID}"'","type": "project"}},"vars": {"data": [{"type": "vars","attributes": {"key": "name","value": "'"${NAME}"'","category": "terraform"}},{"type": "vars","attributes": {"key": "project_name","value": "'"${PROJECT}"'","category": "terraform"}}'"${vcs_repo}""${variables}"']}}}}'
+          json_string='{"data": {"type": "workspaces","attributes": {"name": "'"${workspace_name}"'","auto_apply": true},"relationships": {"project": {"data": {"id": "'"${PROJECT_ID}"'","type": "project"}},"vars": {"data": [{"type": "vars","attributes": {"key": "name","value": "'"${NAME}"'","category": "terraform"}},{"type": "vars","attributes": {"key": "project_name","value": "'"${PROJECT}"'","category": "terraform"}}'"${vcs_repo_identifier}""${variables}"']}}}}'
           json_payload=$(echo "${json_string}" | jq)
           run=$(curl -sS --request POST --url "${tfc_api_url}/no-code-modules/${NO_CODE_ID}/workspaces" \
           --header "${auth_header}" --header "${content_header}" --data "${json_payload}")
